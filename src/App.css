@@ -1,0 +1,61 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+} */
+
+/* Adjusting other elements */
+.logo {
+  margin-bottom: 50px; /* Adds space below header */
+  background-color: yellow; /* Background wraps the logo text */
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block; /* Shrink-wrap the background to the content */
+  padding: 10px; /* Adds space around the text */
+  transform: rotate(-5deg); /* Rotate the entire element */
+}
+
+
+
+.App-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: black
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+/* @keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+/* @media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}  */
