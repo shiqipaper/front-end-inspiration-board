@@ -2,14 +2,16 @@ import PropTypes from 'prop-types';
 import './BoardList.css'; 
 import Board from './Board'; 
 
-const BoardList = ({ boardData }) => {
+const BoardList = ({ boardData, onBoardTitle, onSelectedBoard}) => {
     const boardComponents = boardData.map((board,i) => {
     return (
         <Board
             key={i}
             id={board.id}
             title={board.title}
-            ownner={board.ownner}
+            owner={board.owner}
+            onBoardTitle={onBoardTitle}
+            onSelectedBoard={onSelectedBoard}
         />
 );
 });
@@ -28,8 +30,10 @@ BoardList.propTypes = {
         PropTypes.shape({
             id: PropTypes.number.isRequired,
             title: PropTypes.string.isRequired,
-            ownner: PropTypes.string.isRequired,
+            owner: PropTypes.string.isRequired,
         })
     ).isRequired,
+    onBoardTitle: PropTypes.func.isRequired,
+    onSelectedBoard: PropTypes.func.isRequired,
 };
 export default BoardList;
