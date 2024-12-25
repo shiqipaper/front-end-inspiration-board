@@ -31,6 +31,7 @@ const SELECT_BOARD_FROM_LIST = "Select a Board from the Board List!";
 function App() {
   const [boards, setBoards] = useState(DATA);
   const [selectedBoard, setSelectedBoard] = useState(SELECT_BOARD_FROM_LIST);
+  const [isShowNewBoard, setIsShowNewBoard] = useState(true);
 
 
   // Function to display selectedBoard title
@@ -45,6 +46,9 @@ function App() {
       ...newBoard,
       id: boards.length + 1,
     }])
+  }
+  const hideOrShowNewBoardForm = () =>{
+    setIsShowNewBoard((prev) => !prev)
   }
   return (
     <>
@@ -62,7 +66,14 @@ function App() {
           </div>
           <div className="new-board-form-contaner">
             <h2 className="heading-board">Create a new Board</h2>
-            <NewBoardForm submitBoard={createNewBoard}/>
+            {
+              isShowNewBoard && <NewBoardForm submitBoard={createNewBoard}/>
+            }
+            <button className="hide-or-show-button" type="button" onClick={hideOrShowNewBoardForm}>
+              {
+                isShowNewBoard ? 'Hide New Board Form' : 'Show New Board Form'
+              }
+            </button>
           </div>
         </main>
       </div>
