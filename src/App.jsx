@@ -1,6 +1,7 @@
 import './App.css';
-import BoardList from './components/BoardList';
-import SelectedBoard from './components/SelectedBoard';
+import BoardList from './components/board-list/BoardList';
+import NewBoardForm from './components/create-new-board/NewBoardForm';
+import SelectedBoard from './components/selected-board/SelectedBoard';
 import { useState } from 'react';
 
 const DATA = [
@@ -26,21 +27,11 @@ const DATA = [
   }
 ];
 
+const SELECT_BOARD_FROM_LIST = "Select a Board from the Board List!";
 function App() {
   const [boards, setBoards] = useState(DATA);
-  const [selectedBoard, setSelectedBoard] = useState("Select a Board from the Board List!");
+  const [selectedBoard, setSelectedBoard] = useState(SELECT_BOARD_FROM_LIST);
 
-  // Function to toggle the boards in box
-  const toggleBoard = (id) => {
-    setBoards((boards) => {
-      return boards.map((board) => {
-        if (board.id === id) {
-          return { ...board, selected: !board.selected };
-        }
-        return board;
-      });
-    });
-  };
 
   // Function to display selectedBoard title
   const displaySelectedBoard = (id) => {
@@ -49,7 +40,12 @@ function App() {
       return board ? board.title : selectedBoard;
     });
   };
-
+  const createNewBoard = (newBoard) => {
+    setBoards([...boards, {
+      ...newBoard,
+      id: boards.length + 1,
+    }])
+  }
   return (
     <>
       <div className="App">
@@ -58,11 +54,15 @@ function App() {
         </header>
         <main className="main-content">
           <div className="board-list-container">
-            <BoardList boardData={boards} onBoardTitle={toggleBoard} onSelectedBoard={displaySelectedBoard} />
+            <BoardList boards={boards} onSelectBoard={displaySelectedBoard} />
           </div>
           <div className="selected-board-container">
             <h2 className="heading-board">Selected Board</h2>
             <SelectedBoard selectedTitle={selectedBoard}  />
+          </div>
+          <div className="new-board-form-contaner">
+            <h2 className="heading-board">Create a new Board</h2>
+            <NewBoardForm submitBoard={createNewBoard}/>
           </div>
         </main>
       </div>

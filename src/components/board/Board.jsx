@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import './Board.css'; 
 
-const Board = ({ id, title, owner, onBoardTitle, onSelectedBoard }) => {
+const Board = ({ id, title, onSelectBoard}) => {
     
     const handleClick = () => {
-        onBoardTitle(id);
-        onSelectedBoard(id);
+        onSelectBoard(id);
     }
 
     return (
@@ -18,8 +17,6 @@ const Board = ({ id, title, owner, onBoardTitle, onSelectedBoard }) => {
 Board.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    owner: PropTypes.string.isRequired,
-    onBoardTitle: PropTypes.func.isRequired,
     onSelectBoard: PropTypes.func,
 };
 
