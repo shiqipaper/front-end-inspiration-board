@@ -65,7 +65,7 @@
   text-align: left;
   margin-bottom: 10px;
 }
-.new-board-form-contaner{
+.new-board-form-container{
   flex: 1;
   margin-left: 10px 0 0 10px;
   padding: 10px;
@@ -78,4 +78,15 @@
 .hide-or-show-button{
   margin-top: 8px;
   border: 1px solid black;
+}
+
+.card-list-container{
+  flex: 1;
+  margin-left: 10px 0 0 10px;
+  padding: 10px;
+  position: absolute;
+  top: 220px;
+  left: 400px;
+  display: flex;
+  flex-direction: column;
 }
