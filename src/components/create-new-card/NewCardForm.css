@@ -1,0 +1,22 @@
+.card-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+label[for='card-message'] {
+    text-align: left;
+}
+
+label[for='card-preview'] {
+    text-align: left;
+}
+
+button {
+    border: 1px solid black;
+}
+
+.input-message {
+    border: 1px solid red;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}

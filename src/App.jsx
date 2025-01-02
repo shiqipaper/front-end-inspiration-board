@@ -3,6 +3,7 @@ import BoardList from './components/board-list/BoardList';
 import CardList from './components/card-list/CardList';
 import NewBoardForm from './components/create-new-board/NewBoardForm';
 import SelectedBoard from './components/selected-board/SelectedBoard';
+import NewCardForm from './components/create-new-card/NewCardForm';
 import { useState } from 'react';
 
 const DATA = [
@@ -30,22 +31,22 @@ const DATA = [
 const CARDS = [
   {
     id: 1,
-    message: "Project Ideas",
+    message: "Work Ideas",
     rate: 3
   },
   {
     id: 2,
-    message: "Health & Wellness",
+    message: "Exercise",
     rate: 0
   },
   {
     id: 3,
-    message: "New Business Ideas",
+    message: "Start a laundromat business",
     rate: 1
   },
   {
     id: 4,
-    message: "Travel Bucket List",
+    message: "Europe",
     rate: 5
   }
 ];
@@ -83,6 +84,13 @@ function App() {
     const updatedCards = cards.map((card) => card.id === id ? {...card, rate: card.rate + 1}: card);
     setCards(updatedCards)
   }
+  const createNewCard = (newCard) => {
+    setCards([...cards, {
+      ...newCard,
+      id: cards.length + 1,
+      rate: 0,
+    }])
+  }
   return (
     <>
       <div className="App">
@@ -107,6 +115,10 @@ function App() {
                 isShowNewBoard ? 'Hide New Board Form' : 'Show New Board Form'
               }
             </button>
+          <div className="new-card-form-container">
+            <h2 className= "heading-card">Create a new Card</h2>
+            <NewCardForm onAddCard={createNewCard}/>
+          </div>
           </div>
               {
                 showCards &&  <div className="card-list-container">
