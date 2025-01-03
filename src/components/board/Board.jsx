@@ -17,7 +17,7 @@ const Board = ({ id, title, onSelectBoard}) => {
 Board.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    onSelectBoard: PropTypes.func,
+    onSelectBoard: PropTypes.func.isRequired,
 };
 
 export default Board;

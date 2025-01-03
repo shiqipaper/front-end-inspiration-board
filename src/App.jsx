@@ -4,61 +4,25 @@ import CardList from './components/card-list/CardList';
 import NewBoardForm from './components/create-new-board/NewBoardForm';
 import SelectedBoard from './components/selected-board/SelectedBoard';
 import NewCardForm from './components/create-new-card/NewCardForm';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getAllBoardsApi, createAllBoardApi } from './api/boardApi';
 
-const DATA = [
-  {
-    id: 1,
-    title: "Project Ideas",
-    owner: "John Doe"
-  },
-  {
-    id: 2,
-    title: "Health & Wellness",
-    owner: "Jane Smith"
-  },
-  {
-    id: 3,
-    title: "New Business Ideas",
-    owner: "Alice Johnson"
-  },
-  {
-    id: 4,
-    title: "Travel Bucket List",
-    owner: "Mike Brown"
-  }
-];
-const CARDS = [
-  {
-    id: 1,
-    message: "Work Ideas",
-    rate: 3
-  },
-  {
-    id: 2,
-    message: "Exercise",
-    rate: 0
-  },
-  {
-    id: 3,
-    message: "Start a laundromat business",
-    rate: 1
-  },
-  {
-    id: 4,
-    message: "Europe",
-    rate: 5
-  }
-];
+
 
 const SELECT_BOARD_FROM_LIST = "Select a Board from the Board List!";
 function App() {
-  const [boards, setBoards] = useState(DATA);
+  const [boards, setBoards] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState(SELECT_BOARD_FROM_LIST);
   const [isShowNewBoard, setIsShowNewBoard] = useState(true);
 
-  const [cards, setCards ] = useState(CARDS);
+  const [cards, setCards ] = useState([]);
   const showCards = selectedBoard !== SELECT_BOARD_FROM_LIST;
+
+  useEffect(() => {
+    getAllBoardsApi().then((fetchedBoards) => {
+      setBoards(fetchedBoards);
+    });
+  }, []);
 
   // Function to display selectedBoard title
   const displaySelectedBoard = (id) => {
@@ -67,12 +31,18 @@ function App() {
       return board ? board.title : selectedBoard;
     });
   };
+
   const createNewBoard = (newBoard) => {
-    setBoards([...boards, {
-      ...newBoard,
-      id: boards.length + 1,
-    }])
-  }
+    createAllBoardApi(newBoard)
+    .then((createdBoard) => {
+      createdBoard.id = createdBoard.board_id
+      setBoards((prevBoards) => [...prevBoards, createdBoard]);
+    })
+    .catch((error) => {
+      console.error("Error creating board:", error);
+    });
+  };
+
   const hideOrShowNewBoardForm = () =>{
     setIsShowNewBoard((prev) => !prev)
   }
@@ -130,7 +100,6 @@ function App() {
                 />
               </div>
               }
-      
         </main>
       </div>
     </>
