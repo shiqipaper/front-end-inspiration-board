@@ -5,8 +5,7 @@ import NewBoardForm from './components/create-new-board/NewBoardForm';
 import SelectedBoard from './components/selected-board/SelectedBoard';
 import NewCardForm from './components/create-new-card/NewCardForm';
 import { useState, useEffect } from 'react';
-import { getAllBoardsApi, createAllBoardApi } from './api/boardApi';
-
+import { getAllBoardsApi, createAllBoardApi, getBoardIdApi } from './api/boardApi';
 
 
 const SELECT_BOARD_FROM_LIST = "Select a Board from the Board List!";
@@ -21,21 +20,26 @@ function App() {
   useEffect(() => {
     getAllBoardsApi().then((fetchedBoards) => {
       setBoards(fetchedBoards);
+    }).catch((error) => {
+      console.error("Error fetching boards:", error);
     });
   }, []);
 
-  // Function to display selectedBoard title
   const displaySelectedBoard = (id) => {
-    setSelectedBoard((selectedBoard) => {
-      const board = boards.find((board) => board.id === id);
-      return board ? board.title : selectedBoard;
-    });
+      getBoardIdApi(id)
+        .then((board) => {
+          // console.log("Fetched board:", board);
+          setSelectedBoard(board.title);
+        })
+        .catch((error) => {
+          console.log("Error fetching board:", error);
+        });
   };
 
   const createNewBoard = (newBoard) => {
     createAllBoardApi(newBoard)
     .then((createdBoard) => {
-      createdBoard.id = createdBoard.board_id
+      // createdBoard.id = createdBoard.board_id
       setBoards((prevBoards) => [...prevBoards, createdBoard]);
     })
     .catch((error) => {
