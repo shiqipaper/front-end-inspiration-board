@@ -1,52 +1,29 @@
 import PropTypes from 'prop-types';
 import './CardList.css';
 import Card from '../card/Card';
-import { useState, useEffect } from 'react';
 
-const CardList = ({ cards, onDeleteCard, onRateCard }) => {
-    const [isSortByRate, setIsSortByRate] = useState(false);
-    const [sortedCards, setSortedCards] = useState(cards);
 
-    useEffect(() => {
-        if (isSortByRate) {
-            const sorted = [...cards].sort((a, b) => b.rate - a.rate);
-            setSortedCards(sorted);
-        } else {
-            setSortedCards(cards);
-        }
-    }, [isSortByRate, cards]); 
-
-    const handleSortByRate = () => {
-        setIsSortByRate(true); 
-    };
-
-    const handleResetSorting = () => {
-        setIsSortByRate(false);
-    };
-
+const CardList = ({ cards, onRateCard, onDeleteCard }) => {
     return (
         <div className="card-list">
-            <div className="sortcards">
-                <button onClick={handleSortByRate}>Sort by Likes</button>
-                <button onClick={handleResetSorting}>Reset</button>
-            </div>
-            {
-                sortedCards.map(({ id, message, rate }) => <Card
+            {cards.map(({ id, message, likes_count }) => (
+                <Card
                     key={id}
                     id={id}
                     message={message}
-                    rate={rate}
-                    onDeleteCard={onDeleteCard}
+                    rate={likes_count}
                     onRateCard={onRateCard}
-                />)
-            }
+                    onDeleteCard={onDeleteCard}
+                />
+            ))}
         </div>
     );
 };
 
 CardList.propTypes = {
     cards: PropTypes.array.isRequired,
-    onDeleteCard: PropTypes.func.isRequired,
-    onRateCard: PropTypes.func.isRequired
+    onRateCard: PropTypes.func.isRequired,
+    onDeleteCard: PropTypes.func.isRequired
 };
+
 export default CardList;
