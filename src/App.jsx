@@ -5,17 +5,16 @@ import NewBoardForm from './components/create-new-board/NewBoardForm';
 import SelectedBoard from './components/selected-board/SelectedBoard';
 import NewCardForm from './components/create-new-card/NewCardForm';
 import { useState, useEffect } from 'react';
-import { getAllBoardsApi, createAllBoardApi, getBoardIdApi } from './api/boardApi';
+import { getAllBoardsApi, createAllBoardApi, getBoardIdApi, createCardApi } from './api/boardApi';
 
 
 const SELECT_BOARD_FROM_LIST = "Select a Board from the Board List!";
 function App() {
   const [boards, setBoards] = useState([]);
-  const [selectedBoard, setSelectedBoard] = useState(SELECT_BOARD_FROM_LIST);
+  const [selectedBoard, setSelectedBoard] = useState(null);
   const [isShowNewBoard, setIsShowNewBoard] = useState(true);
-
   const [cards, setCards ] = useState([]);
-  const showCards = selectedBoard !== SELECT_BOARD_FROM_LIST;
+  const showCards = selectedBoard !== null;
 
   useEffect(() => {
     getAllBoardsApi().then((fetchedBoards) => {
@@ -29,10 +28,10 @@ function App() {
       getBoardIdApi(id)
         .then((board) => {
           // console.log("Fetched board:", board);
-          setSelectedBoard(board.title);
+          setSelectedBoard(board);
         })
         .catch((error) => {
-          console.log("Error fetching board:", error);
+          console.error("Error fetching board:", error);
         });
   };
 
@@ -55,16 +54,24 @@ function App() {
     setCards(updatedCards)
   }
   const rateCard = (id) => {
-    const updatedCards = cards.map((card) => card.id === id ? {...card, rate: card.rate + 1}: card);
+    const updatedCards = cards.map((card) => card.id === id ? {...card, rate: (card.rate || 0) + 1}: card);
     setCards(updatedCards)
   }
+
   const createNewCard = (newCard) => {
-    setCards([...cards, {
-      ...newCard,
-      id: cards.length + 1,
-      rate: 0,
-    }])
-  }
+    if (!selectedBoard) {
+      console.error("No board selected or boardId is missing");
+      return;
+    }
+    createCardApi(selectedBoard.id, newCard)
+      .then((createdCard) => {
+        setCards((prevCards) => [...prevCards, createdCard]);
+      })
+      .catch((error) => {
+        console.error("Error creating card:", error);
+      });
+  };
+
   return (
     <>
       <div className="App">
@@ -77,7 +84,12 @@ function App() {
           </div>
           <div className="selected-board-container">
             <h2 className="heading-board">Selected Board</h2>
-            <SelectedBoard selectedTitle={selectedBoard}  />
+            {/* <SelectedBoard selectedTitle={selectedBoard}  /> */}
+            {selectedBoard ? (
+              <SelectedBoard selectedTitle={selectedBoard.title} selectedId={selectedBoard.id} />
+            ) : (
+              <p>{SELECT_BOARD_FROM_LIST}</p>
+            )}
           </div>
           <div className="new-board-form-container">
             <h2 className="heading-board">Create a new Board</h2>
