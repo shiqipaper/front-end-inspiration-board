@@ -31,11 +31,11 @@ const CardList = ({ cards, onDeleteCard, onRateCard }) => {
                 <button onClick={handleResetSorting}>Reset</button>
             </div>
             {
-                sortedCards.map(({ id, message, rate }) => <Card
-                    key={id}
-                    id={id}
+                sortedCards.map(({ card_id, message, likes_count }) => <Card
+                    key={card_id}
+                    card_id={card_id}
                     message={message}
-                    rate={rate}
+                    likes_count={likes_count}
                     onDeleteCard={onDeleteCard}
                     onRateCard={onRateCard}
                 />)

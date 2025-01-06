@@ -6,6 +6,7 @@ import SelectedBoard from './components/selected-board/SelectedBoard';
 import NewCardForm from './components/create-new-card/NewCardForm';
 import { useState, useEffect } from 'react';
 import { getAllBoardsApi, createAllBoardApi, getBoardIdApi } from './api/boardApi';
+import { getAllCardsApi, createCardApi } from './api/cardApi';
 
 
 const SELECT_BOARD_FROM_LIST = "Select a Board from the Board List!";
@@ -13,9 +14,11 @@ function App() {
   const [boards, setBoards] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState(SELECT_BOARD_FROM_LIST);
   const [isShowNewBoard, setIsShowNewBoard] = useState(true);
+  const [selectedBoardID, setSelectedBoardID] = useState(0);
 
   const [cards, setCards ] = useState([]);
   const showCards = selectedBoard !== SELECT_BOARD_FROM_LIST;
+  
 
   useEffect(() => {
     getAllBoardsApi().then((fetchedBoards) => {
@@ -34,8 +37,16 @@ function App() {
         .catch((error) => {
           console.log("Error fetching board:", error);
         });
+        //fetch cards with board id based on chosen board
+      getAllCardsApi(id).then((fetchedCards) => {
+        setCards(fetchedCards)
+      })
+      .catch((error) => {
+        console.log("Error fetching board:", error);
+      });
+      setSelectedBoardID(id)
   };
-
+  
   const createNewBoard = (newBoard) => {
     createAllBoardApi(newBoard)
     .then((createdBoard) => {
@@ -59,11 +70,14 @@ function App() {
     setCards(updatedCards)
   }
   const createNewCard = (newCard) => {
-    setCards([...cards, {
-      ...newCard,
-      id: cards.length + 1,
-      rate: 0,
-    }])
+    createCardApi(selectedBoardID, newCard)
+    .then(({card}) => {
+      setCards([...cards, card])
+    })
+    .catch((error) => {
+      console.error("Error creating card:", error);
+    });
+    
   }
   return (
     <>

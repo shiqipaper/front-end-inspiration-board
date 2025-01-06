@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import './Board.css'; 
 
 const Board = ({ id, title, onSelectBoard}) => {
-    
     const handleClick = () => {
         onSelectBoard(id);
     }

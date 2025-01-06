@@ -1,16 +1,16 @@
 import axios from 'axios';
 import { convertIdFromBackend, convertIdtoBackend } from '../utilities.jsx'
 
-const kbaseURL = 'http://127.0.0.1:5000';
+const kbaseURL = 'https://back-end-inspiration-board-52p9.onrender.com';
 
 export const getAllBoardsApi = () => {
     return axios.get(`${kbaseURL}/boards`)
     .then((response) => {
         const apiBoards = response.data;
         // console.log("apiBoards:", apiBoards);
-        const newBoards = apiBoards.map(convertIdFromBackend);
+        //const newBoards = apiBoards.map(convertIdFromBackend);
         // console.log("newBoards:", newBoards);
-        return newBoards;
+        return apiBoards;
     })
     .catch((error) => {
         console.error("Error fetching boards:", error);

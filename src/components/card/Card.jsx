@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types';
 import './Card.css'; 
 
-const Card = ({ id, message, rate, onDeleteCard, onRateCard}) => {
+const Card = ({ card_id, message, likes_count, onDeleteCard, onRateCard}) => {
     
     const deleteCard = () => {
-        onDeleteCard(id)
+        onDeleteCard(card_id)
     }
     const rateCard = () => {
-        onRateCard(id)
+        onRateCard(card_id)
     }
 
     return (
         <div className="card">
             <div className="message">{message}</div>
             <div className="actions">
-                <span>{`${rate}❤️`}</span>
+                <span>{`${likes_count}❤️`}</span>
                 <button className="rate-button" onClick={rateCard}>+1</button>
                 <button className = "delete-button" onClick={deleteCard}>Delete</button>
             </div>
@@ -23,9 +23,9 @@ const Card = ({ id, message, rate, onDeleteCard, onRateCard}) => {
 }
 
 Card.propTypes = {
-    id: PropTypes.number.isRequired,
+    card_id: PropTypes.number.isRequired,
     message: PropTypes.string.isRequired,
-    rate: PropTypes.number.isRequired,
+    likes_count: PropTypes.number.isRequired,
     onDeleteCard: PropTypes.func,
     onRateCard: PropTypes.func
 };
