@@ -126,8 +126,12 @@ function App() {
               }
             </button>
           <div className="new-card-form-container">
-            <h2 className= "heading-card">Create a new Card</h2>
-            <NewCardForm onAddCard={createNewCard}/>
+            {selectedBoardTitle ? (
+              <>
+              <h2 className= "heading-card">Create a new Card</h2>
+              <NewCardForm onAddCard={createNewCard}/>
+              </>
+            ) : null}
           </div>
           </div>
               {
