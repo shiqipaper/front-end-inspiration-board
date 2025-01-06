@@ -16,12 +16,12 @@ function App() {
   const [isShowNewBoard, setIsShowNewBoard] = useState(true);
   const [selectedBoardID, setSelectedBoardID] = useState(0);
   const [selectedBoardOwner, setSelectedBoardOwner] = useState('');
-  const [cards, setCards ] = useState([]);
+  const [cards, setCards] = useState([]);
   const showCards = selectedBoardTitle !== null;
-  const [originalCards, setOriginalCards] = useState([]);
+  const [, setOriginalCards] = useState([]);
   const [isSortByLikes, setIsSortByLikes] = useState(false);
-  
-  
+
+
 
   useEffect(() => {
     getAllBoardsApi().then((fetchedBoards) => {
@@ -32,60 +32,58 @@ function App() {
   }, []);
 
   const displaySelectedBoard = (boardId) => {
-      getBoardIdApi(boardId)
-        .then((board) => {
-          // console.log("Fetched board:", board);
-          setSelectedBoardTitle(board.title);
-          setSelectedBoardID(board.boardId);
-          setSelectedBoardOwner(board.owner);
-        })
-        .catch((error) => {
-          console.error("Error fetching board:", error);
-        });
-        //fetch cards with board id based on chosen board
-      getAllCardsApi(boardId).then((fetchedCards) => {
-        setCards(fetchedCards);
-        setOriginalCards(fetchedCards);
+    getBoardIdApi(boardId)
+      .then((board) => {
+        setSelectedBoardTitle(board.title);
+        setSelectedBoardID(board.boardId);
+        setSelectedBoardOwner(board.owner);
       })
+      .catch((error) => {
+        console.error("Error fetching board:", error);
+      });
+    getAllCardsApi(boardId).then((fetchedCards) => {
+      setCards(fetchedCards);
+      setOriginalCards(fetchedCards);
+      setIsSortByLikes(false);
+    })
       .catch((error) => {
         console.log("Error fetching board:", error);
       });
-      setSelectedBoardID(boardId)
-  };
-  
-  const createNewBoard = (newBoard) => {
-    createAllBoardApi(newBoard)
-    .then((createdBoard) => {
-      // createdBoard.id = createdBoard.board_id
-      setBoards((prevBoards) => [...prevBoards, createdBoard]);
-    })
-    .catch((error) => {
-      console.error("Error creating board:", error);
-    });
+    setSelectedBoardID(boardId)
   };
 
-  const hideOrShowNewBoardForm = () =>{
+  const createNewBoard = (newBoard) => {
+    createAllBoardApi(newBoard)
+      .then((createdBoard) => {
+        setBoards((prevBoards) => [...prevBoards, createdBoard]);
+      })
+      .catch((error) => {
+        console.error("Error creating board:", error);
+      });
+  };
+
+  const hideOrShowNewBoardForm = () => {
     setIsShowNewBoard((prev) => !prev)
   }
   const deleteCard = (card) => {
     deleteCardApi(card.card_id, card)
-    .then(({message}) =>{
-      if(message==='Card deleted successfully'){
-        const updatedCards = cards.filter((currentCard) => currentCard.card_id != card.card_id);
-        setCards(updatedCards);
-        setOriginalCards(updatedCards)
-      }
-    })
+      .then(({ message }) => {
+        if (message === 'Card deleted successfully') {
+          const updatedCards = cards.filter((currentCard) => currentCard.card_id != card.card_id);
+          setCards(updatedCards);
+          setOriginalCards(updatedCards)
+        }
+      })
   };
 
   const rateCard = (updated_card) => {
 
     updateCardApi(updated_card.card_id, updated_card)
-    .then(({card}) =>{
-      const updatedCards = cards.map((currentCard) => currentCard.card_id === card.card_id ? card : currentCard);
-      setCards(updatedCards);
-      setOriginalCards(updatedCards)
-    })
+      .then(({ card }) => {
+        const updatedCards = cards.map((currentCard) => currentCard.card_id === card.card_id ? card : currentCard);
+        setCards(updatedCards);
+        setOriginalCards(updatedCards)
+      })
   };
 
   const createNewCard = (newCard) => {
@@ -94,27 +92,27 @@ function App() {
       return;
     }
     createCardApi(selectedBoardID, newCard)
-    .then(({card}) => {
-      const updatedCards = [...cards, card];
+      .then(({ card }) => {
+        const updatedCards = [...cards, card];
         setCards(updatedCards);
         setOriginalCards(updatedCards);
-    })
-    .catch((error) => {
-      console.error("Error creating card:", error);
-    });
+      })
+      .catch((error) => {
+        console.error("Error creating card:", error);
+      });
   };
   const sortedCards = isSortByLikes
-  ? [...cards].sort((a, b) => b.likes_count - a.likes_count) 
-  : cards; 
+    ? [...cards].sort((a, b) => b.likes_count - a.likes_count)
+    : cards;
 
   const sortByLikes = () => {
     setIsSortByLikes(true);
   };
-  
+
   const resetLikes = () => {
     setIsSortByLikes(false);
   };
-  
+
   return (
     <>
       <div className="App">
@@ -127,9 +125,8 @@ function App() {
           </div>
           <div className="selected-board-container">
             <h2 className="heading-board">Selected Board</h2>
-            {/* <SelectedBoard selectedTitle={selectedBoard}  /> */}
             {selectedBoardTitle ? (
-              <SelectedBoard selectedTitle={selectedBoardTitle} selectedBoardID={selectedBoardID} selectedBoardOwner={selectedBoardOwner}/>
+              <SelectedBoard selectedTitle={selectedBoardTitle} selectedBoardID={selectedBoardID} selectedBoardOwner={selectedBoardOwner} />
             ) : (
               <p>{SELECT_BOARD_FROM_LIST}</p>
             )}
@@ -137,36 +134,36 @@ function App() {
           <div className="new-board-form-container">
             <h2 className="heading-board">Create a new Board</h2>
             {
-              isShowNewBoard && <NewBoardForm submitBoard={createNewBoard}/>
+              isShowNewBoard && <NewBoardForm submitBoard={createNewBoard} />
             }
             <button className="hide-or-show-button" type="button" onClick={hideOrShowNewBoardForm}>
               {
                 isShowNewBoard ? 'Hide New Board Form' : 'Show New Board Form'
               }
             </button>
-          <div className="new-card-form-container">
-            {selectedBoardTitle ? (
-              <>
-              <h2 className= "heading-card">Create a new Card</h2>
-              <NewCardForm onAddCard={createNewCard}/>
-              </>
-            ) : null}
+            <div className="new-card-form-container">
+              {selectedBoardTitle ? (
+                <>
+                  <h2 className="heading-card">Create a new Card</h2>
+                  <NewCardForm onAddCard={createNewCard} />
+                </>
+              ) : null}
+            </div>
           </div>
-          </div>
-              {
-                showCards &&  <div className="card-list-container">
-                <h2 className="heading-board">{`Cards for ${selectedBoardTitle}`}</h2>
-                <div className="sortcards">
-                  <button onClick={sortByLikes}>Sort by Likes</button>
-                  <button onClick={resetLikes}>Reset</button>
-                </div>
-                <CardList 
-                  cards={sortedCards} 
-                  onDeleteCard={deleteCard} 
-                  onRateCard={rateCard}
-                />
+          {
+            showCards && <div className="card-list-container">
+              <h2 className="heading-board">{`Cards for ${selectedBoardTitle}`}</h2>
+              <div className="sort-reset-container">
+                <button onClick={sortByLikes}>Sort by Likes</button>
+                <button onClick={resetLikes}>Reset</button>
               </div>
-              }
+              <CardList
+                cards={sortedCards}
+                onDeleteCard={deleteCard}
+                onRateCard={rateCard}
+              />
+            </div>
+          }
         </main>
       </div>
     </>

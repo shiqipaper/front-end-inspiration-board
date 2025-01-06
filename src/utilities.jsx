@@ -1,15 +1,13 @@
-// converting borad_id(backend) --> id(frontend)
 export const convertIdFromBackend = (board) => {
-    return {
-        ...board,
-        boardId: board.board_id,
-    };
+  return {
+    ...board,
+    boardId: board.board_id,
+  };
 };
 
-// converting id(frontend) --> borad_id(backend) 
 export const convertIdtoBackend = (board) => {
-    return {
-        ...board,
-        board_id: board.boardId
-    };
+  return {
+    ...board,
+    board_id: board.boardId
+  };
 };

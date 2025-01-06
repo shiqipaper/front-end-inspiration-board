@@ -3,21 +3,18 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-} 
+}
 
-/* Adjusting other elements */
 .logo {
-  margin-bottom: 50px; /* Adds space below header */
-  background-color: yellow; /* Background wraps the logo text */
+  margin-bottom: 50px;
+  background-color: yellow;
   position: absolute;
   top: 0;
   left: 0;
-  display: inline-block; /* Shrink-wrap the background to the content */
-  padding: 10px; /* Adds space around the text */
-  transform: rotate(-5deg); /* Rotate the entire element */
+  display: inline-block;
+  padding: 10px;
+  transform: rotate(-5deg);
 }
-
-
 
 .App-header {
   position: absolute;
@@ -33,6 +30,7 @@
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -41,10 +39,11 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
-} 
+}
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
@@ -65,7 +64,8 @@
   text-align: left;
   margin-bottom: 10px;
 }
-.new-board-form-container{
+
+.new-board-form-container {
   flex: 1;
   margin-left: 10px 0 0 10px;
   padding: 10px;
@@ -75,12 +75,13 @@
   display: flex;
   flex-direction: column;
 }
-.hide-or-show-button{
+
+.hide-or-show-button {
   margin-top: 8px;
   border: 1px solid black;
 }
 
-.card-list-container{
+.card-list-container {
   flex: 1;
   margin-left: 10px 0 0 10px;
   padding: 10px;
@@ -99,7 +100,7 @@
   box-shadow: 10px 10px 0px black;
 }
 
-.new-card-form-container{
+.new-card-form-container {
   flex: 1;
   margin-left: 10px;
   padding: 10px;
@@ -108,4 +109,11 @@
   left: 0px;
   display: flex;
   flex-direction: column;
+}
+
+.sort-reset-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
 }
