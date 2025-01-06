@@ -16,45 +16,30 @@ const NewBoardForm = ({ submitBoard }) => {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-        setError({
-            title: '',
-            owner: ''
-        });
+        if (value.trim()) {
+            setError((prevError) => ({ ...prevError, [name]: '' }));
+        }
     };
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(!formData.title && !formData.owner){
-            setError({
-                owner: 'Required',
-                title: 'Required'
-            });
-        }else if(!formData.title){
-            setError({
-                owner: '',
-                title: 'Required'
-            });
-        } else if(!formData.owner){
-            setError({
-                title: '',
-                owner: 'Required'
-            });
-        }
-        
-        if(formData.title && formData.owner){
-            submitBoard(formData)
+        setError({
+            title: !formData.title.trim() ? (formData.title ? 'Invalid title' : 'Required') : '',
+            owner: !formData.owner.trim() ? (formData.owner ? 'Invalid owner' : 'Required') : ''
+        });
+        if (formData.title.trim() && formData.owner.trim()) {
+            submitBoard(formData);
             setFormData({
                 title: '',
-                owner: '',
-        
+                owner: ''
             });
             setError({
                 title: '',
                 owner: ''
             });
-        
         }
     }
+    
     return (
         <form onSubmit={handleSubmit} className="board-form">
             <label htmlFor="board-title">Title</label>
