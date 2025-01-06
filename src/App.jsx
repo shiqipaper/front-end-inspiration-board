@@ -12,12 +12,12 @@ import { getAllCardsApi, createCardApi } from './api/cardApi';
 const SELECT_BOARD_FROM_LIST = "Select a Board from the Board List!";
 function App() {
   const [boards, setBoards] = useState([]);
-  const [selectedBoard, setSelectedBoard] = useState(null);
+  const [selectedBoardTitle, setSelectedBoardTitle] = useState(null);
   const [isShowNewBoard, setIsShowNewBoard] = useState(true);
   const [selectedBoardID, setSelectedBoardID] = useState(0);
 
   const [cards, setCards ] = useState([]);
-  const showCards = selectedBoard !== null;
+  const showCards = selectedBoardTitle !== null;
   
 
   useEffect(() => {
@@ -32,7 +32,8 @@ function App() {
       getBoardIdApi(id)
         .then((board) => {
           // console.log("Fetched board:", board);
-          setSelectedBoard(board);
+          setSelectedBoardTitle(board.title);
+          setSelectedBoardID(board.id)
         })
         .catch((error) => {
           console.error("Error fetching board:", error);
@@ -71,7 +72,7 @@ function App() {
   }
 
   const createNewCard = (newCard) => {
-    if (!selectedBoard) {
+    if (!selectedBoardTitle) {
       console.error("No board selected or boardId is missing");
       return;
     }
@@ -97,8 +98,8 @@ function App() {
           <div className="selected-board-container">
             <h2 className="heading-board">Selected Board</h2>
             {/* <SelectedBoard selectedTitle={selectedBoard}  /> */}
-            {selectedBoard ? (
-              <SelectedBoard selectedTitle={selectedBoard.title} selectedId={selectedBoard.id} />
+            {selectedBoardTitle ? (
+              <SelectedBoard selectedTitle={selectedBoardTitle} selectedBoardID={selectedBoardID}/>
             ) : (
               <p>{SELECT_BOARD_FROM_LIST}</p>
             )}
@@ -120,7 +121,7 @@ function App() {
           </div>
               {
                 showCards &&  <div className="card-list-container">
-                <h2 className="heading-board">{`Cards for ${selectedBoard}`}</h2>
+                <h2 className="heading-board">{`Cards for ${selectedBoardTitle}`}</h2>
                 <CardList 
                   cards={cards} 
                   onDeleteCard={deleteCard} 

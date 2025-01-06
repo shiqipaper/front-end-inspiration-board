@@ -43,18 +43,4 @@ export const getBoardIdApi = (id) => {
     });
 };
 
-export const createCardApi = (boardId, newCard) => {
-    // console.log("Creating card for board ID:", boardId); // Debugging statement
-    // console.log("New card data:", newCard); // Debugging statement
-    return axios.post(`${kbaseURL}/boards/${boardId}/cards`, newCard)
-        .then((response) => {
-            // console.log("Created card response:", response.data); // Debugging statement
-            const card = convertIdFromBackend(response.data.card);
-            card.rate = card.rate || 0;
-            return card;
-        })
-        .catch((error) => {
-            console.log("Error creating card:", error);
-        });
-};
 
