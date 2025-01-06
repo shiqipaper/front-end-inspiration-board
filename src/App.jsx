@@ -18,6 +18,9 @@ function App() {
   const [selectedBoardOwner, setSelectedBoardOwner] = useState('');
   const [cards, setCards ] = useState([]);
   const showCards = selectedBoardTitle !== null;
+  const [originalCards, setOriginalCards] = useState([]);
+  const [isSortByLikes, setIsSortByLikes] = useState(false);
+  
   
 
   useEffect(() => {
@@ -41,7 +44,8 @@ function App() {
         });
         //fetch cards with board id based on chosen board
       getAllCardsApi(id).then((fetchedCards) => {
-        setCards(fetchedCards)
+        setCards(fetchedCards);
+        setOriginalCards(fetchedCards);
       })
       .catch((error) => {
         console.log("Error fetching board:", error);
@@ -68,19 +72,21 @@ function App() {
     .then(({message}) =>{
       if(message==='Card deleted successfully'){
         const updatedCards = cards.filter((currentCard) => currentCard.card_id != card.card_id);
-        setCards(updatedCards)
+        setCards(updatedCards);
+        setOriginalCards(updatedCards)
       }
-     
     })
-  }
+  };
+
   const rateCard = (updated_card) => {
 
     updateCardApi(updated_card.card_id, updated_card)
     .then(({card}) =>{
       const updatedCards = cards.map((currentCard) => currentCard.card_id === card.card_id ? card : currentCard);
-      setCards(updatedCards)
+      setCards(updatedCards);
+      setOriginalCards(updatedCards)
     })
-  }
+  };
 
   const createNewCard = (newCard) => {
     if (!selectedBoardTitle) {
@@ -89,13 +95,26 @@ function App() {
     }
     createCardApi(selectedBoardID, newCard)
     .then(({card}) => {
-      setCards([...cards, card])
+      const updatedCards = [...cards, card];
+        setCards(updatedCards);
+        setOriginalCards(updatedCards);
     })
     .catch((error) => {
       console.error("Error creating card:", error);
     });
-    
-  }
+  };
+  const sortedCards = isSortByLikes
+  ? [...cards].sort((a, b) => b.likes_count - a.likes_count) 
+  : cards; 
+
+  const sortByLikes = () => {
+    setIsSortByLikes(true);
+  };
+  
+  const resetLikes = () => {
+    setIsSortByLikes(false);
+  };
+  
   return (
     <>
       <div className="App">
@@ -137,8 +156,12 @@ function App() {
               {
                 showCards &&  <div className="card-list-container">
                 <h2 className="heading-board">{`Cards for ${selectedBoardTitle}`}</h2>
+                <div className="sortcards">
+                  <button onClick={sortByLikes}>Sort by Likes</button>
+                  <button onClick={resetLikes}>Reset</button>
+                </div>
                 <CardList 
-                  cards={cards} 
+                  cards={sortedCards} 
                   onDeleteCard={deleteCard} 
                   onRateCard={rateCard}
                 />

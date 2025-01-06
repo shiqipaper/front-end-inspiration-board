@@ -1,10 +1,10 @@
 import axios from 'axios';
-const kbaseURL = 'https://back-end-inspiration-board-52p9.onrender.com';
+const VITE_APP_BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL
 
 
 //Get all cards
 export const getAllCardsApi = (id) => {
-    return axios.get(`${kbaseURL}/boards/${id}/cards`)
+    return axios.get(`${VITE_APP_BACKEND_URL}/boards/${id}/cards`)
     .then((response) => {
         const apiCards = response.data;
         const newCards = apiCards.cards;
@@ -19,7 +19,7 @@ export const getAllCardsApi = (id) => {
 //Create card
 export const createCardApi = (board_id, newCard) => {
     // console.log("Board with board_id:",boardWithBoardId);
-    return axios.post(`${kbaseURL}/boards/${board_id}/cards`, newCard)
+    return axios.post(`${VITE_APP_BACKEND_URL}/boards/${board_id}/cards`, newCard)
     .then((response) => {
         return response.data;
     })
@@ -31,7 +31,7 @@ export const createCardApi = (board_id, newCard) => {
 //Update card
 export const updateCardApi = (card_id, card) => {
     
-    return axios.put(`${kbaseURL}/cards/${card_id}/like`, card)
+    return axios.put(`${VITE_APP_BACKEND_URL}/cards/${card_id}/like`, card)
     .then((response) => {
         return response.data;
     })
@@ -43,7 +43,7 @@ export const updateCardApi = (card_id, card) => {
 //Delete card
 export const deleteCardApi = (card_id, card) => {
     
-    return axios.delete(`${kbaseURL}/cards/${card_id}`, card)
+    return axios.delete(`${VITE_APP_BACKEND_URL}/cards/${card_id}`, card)
     .then((response) => {
         return response.data;
     })
