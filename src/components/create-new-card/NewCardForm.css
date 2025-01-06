@@ -17,6 +17,11 @@ button {
 }
 
 .input-message {
+    border: 1px solid black;
+    box-shadow: none;
+}
+
+.input-error {
     border: 1px solid red;
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
