@@ -27,8 +27,8 @@ const CardList = ({ cards, onDeleteCard, onRateCard }) => {
     return (
         <div className="card-list">
             <div className="sortcards">
-                <button onClick={handleSortByRate}>Sort by Likes</button>
-                <button onClick={handleResetSorting}>Reset</button>
+                <button className="button-like" onClick={handleSortByRate}>Sort by Likes</button>
+                <button className="button-reset" onClick={handleResetSorting}>Reset</button>
             </div>
             {
                 sortedCards.map(({ card_id, message, likes_count }) => <Card
