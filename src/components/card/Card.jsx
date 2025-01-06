@@ -12,7 +12,11 @@ const Card = (props) => {
     } = props;
 
     const deleteCard = () => {
-        onDeleteCard(card_id)
+        onDeleteCard({
+            card_id, 
+            message, 
+            likes_count, 
+        })
     }
     const rateCard = () => {
         onRateCard({

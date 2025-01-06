@@ -29,9 +29,21 @@ export const createCardApi = (board_id, newCard) => {
 };
 
 //Update card
-export const updateCardApi = (card_id, updatedCard) => {
+export const updateCardApi = (card_id, card) => {
     
-    return axios.put(`${kbaseURL}/cards/${card_id}/like`, updatedCard)
+    return axios.put(`${kbaseURL}/cards/${card_id}/like`, card)
+    .then((response) => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log("Error creating board:", error);
+    });
+};
+
+//Delete card
+export const deleteCardApi = (card_id, card) => {
+    
+    return axios.delete(`${kbaseURL}/cards/${card_id}`, card)
     .then((response) => {
         return response.data;
     })

@@ -6,7 +6,7 @@ import SelectedBoard from './components/selected-board/SelectedBoard';
 import NewCardForm from './components/create-new-card/NewCardForm';
 import { useState, useEffect } from 'react';
 import { getAllBoardsApi, createAllBoardApi, getBoardIdApi } from './api/boardApi';
-import { getAllCardsApi, createCardApi, updateCardApi } from './api/cardApi';
+import { getAllCardsApi, createCardApi, updateCardApi, deleteCardApi } from './api/cardApi';
 
 
 const SELECT_BOARD_FROM_LIST = "Select a Board from the Board List!";
@@ -62,9 +62,15 @@ function App() {
   const hideOrShowNewBoardForm = () =>{
     setIsShowNewBoard((prev) => !prev)
   }
-  const deleteCard = (id) => {
-    const updatedCards = cards.filter((card) => card.id != id);
-    setCards(updatedCards)
+  const deleteCard = (card) => {
+    deleteCardApi(card.card_id, card)
+    .then(({message}) =>{
+      if(message==='Card deleted successfully'){
+        const updatedCards = cards.filter((currentCard) => currentCard.card_id != card.card_id);
+        setCards(updatedCards)
+      }
+     
+    })
   }
   const rateCard = (updated_card) => {
 
