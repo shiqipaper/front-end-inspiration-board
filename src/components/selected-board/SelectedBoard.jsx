@@ -4,7 +4,7 @@ import './SelectedBoard.css';
 const SelectedBoard = ({ selectedTitle }) => {
     return (
         <div className="selected-board-item">
-            <h3>{selectedTitle}</h3>
+            <h3>{selectedTitle.title}</h3>
         </div>
     );
 }

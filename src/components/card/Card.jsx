@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import './Card.css'; 
 
+
 const Card = ({ card_id, message, likes_count, onDeleteCard, onRateCard}) => {
     
     const deleteCard = () => {

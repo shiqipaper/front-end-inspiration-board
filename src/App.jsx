@@ -12,12 +12,12 @@ import { getAllCardsApi, createCardApi } from './api/cardApi';
 const SELECT_BOARD_FROM_LIST = "Select a Board from the Board List!";
 function App() {
   const [boards, setBoards] = useState([]);
-  const [selectedBoard, setSelectedBoard] = useState(SELECT_BOARD_FROM_LIST);
+  const [selectedBoard, setSelectedBoard] = useState(null);
   const [isShowNewBoard, setIsShowNewBoard] = useState(true);
   const [selectedBoardID, setSelectedBoardID] = useState(0);
 
   const [cards, setCards ] = useState([]);
-  const showCards = selectedBoard !== SELECT_BOARD_FROM_LIST;
+  const showCards = selectedBoard !== null;
   
 
   useEffect(() => {
@@ -32,10 +32,10 @@ function App() {
       getBoardIdApi(id)
         .then((board) => {
           // console.log("Fetched board:", board);
-          setSelectedBoard(board.title);
+          setSelectedBoard(board);
         })
         .catch((error) => {
-          console.log("Error fetching board:", error);
+          console.error("Error fetching board:", error);
         });
         //fetch cards with board id based on chosen board
       getAllCardsApi(id).then((fetchedCards) => {
@@ -66,10 +66,15 @@ function App() {
     setCards(updatedCards)
   }
   const rateCard = (id) => {
-    const updatedCards = cards.map((card) => card.id === id ? {...card, rate: card.rate + 1}: card);
+    const updatedCards = cards.map((card) => card.id === id ? {...card, rate: (card.rate || 0) + 1}: card);
     setCards(updatedCards)
   }
+
   const createNewCard = (newCard) => {
+    if (!selectedBoard) {
+      console.error("No board selected or boardId is missing");
+      return;
+    }
     createCardApi(selectedBoardID, newCard)
     .then(({card}) => {
       setCards([...cards, card])
@@ -91,7 +96,12 @@ function App() {
           </div>
           <div className="selected-board-container">
             <h2 className="heading-board">Selected Board</h2>
-            <SelectedBoard selectedTitle={selectedBoard}  />
+            {/* <SelectedBoard selectedTitle={selectedBoard}  /> */}
+            {selectedBoard ? (
+              <SelectedBoard selectedTitle={selectedBoard.title} selectedId={selectedBoard.id} />
+            ) : (
+              <p>{SELECT_BOARD_FROM_LIST}</p>
+            )}
           </div>
           <div className="new-board-form-container">
             <h2 className="heading-board">Create a new Board</h2>
