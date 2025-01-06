@@ -5,9 +5,13 @@ import { useState } from 'react';
 const NewCardForm = ({ onAddCard }) => {
     const [formCard, setFormCard] = useState('');
     const [error, setError] = useState('');
+    const characterLimitError = 'Card message must not exceed 40 characters';
 
     const handleCardChange = (event) => {
             setFormCard(event.target.value);
+            if (event.target.value.length > 40) {
+                setError(characterLimitError);
+            };
             if (event.target.value.length <= 40 && (event.target.value.trim() !== '')) {
                 setError('');
             };
@@ -21,7 +25,7 @@ const NewCardForm = ({ onAddCard }) => {
             return;
         }
         if (formCard.length > 40) {
-            setError('Card message must not exceed 40 characters');
+            setError(characterLimitError);
             return;
         }
         if (!formCard.trim()) {
