@@ -1,4 +1,5 @@
 .board-item {
-    margin-bottom: 10px; /* Add some space between items */
-    cursor: pointer;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #000000;
 }
