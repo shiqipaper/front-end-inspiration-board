@@ -2,7 +2,7 @@
 export const convertIdFromBackend = (board) => {
     return {
         ...board,
-        id: board.board_id,
+        boardId: board.board_id,
     };
 };
 
@@ -10,6 +10,6 @@ export const convertIdFromBackend = (board) => {
 export const convertIdtoBackend = (board) => {
     return {
         ...board,
-        board_id: board.id
+        board_id: board.boardId
     };
 };

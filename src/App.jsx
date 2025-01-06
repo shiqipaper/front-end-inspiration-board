@@ -31,26 +31,26 @@ function App() {
     });
   }, []);
 
-  const displaySelectedBoard = (id) => {
-      getBoardIdApi(id)
+  const displaySelectedBoard = (boardId) => {
+      getBoardIdApi(boardId)
         .then((board) => {
           // console.log("Fetched board:", board);
           setSelectedBoardTitle(board.title);
-          setSelectedBoardID(board.id);
+          setSelectedBoardID(board.boardId);
           setSelectedBoardOwner(board.owner);
         })
         .catch((error) => {
           console.error("Error fetching board:", error);
         });
         //fetch cards with board id based on chosen board
-      getAllCardsApi(id).then((fetchedCards) => {
+      getAllCardsApi(boardId).then((fetchedCards) => {
         setCards(fetchedCards);
         setOriginalCards(fetchedCards);
       })
       .catch((error) => {
         console.log("Error fetching board:", error);
       });
-      setSelectedBoardID(id)
+      setSelectedBoardID(boardId)
   };
   
   const createNewBoard = (newBoard) => {
