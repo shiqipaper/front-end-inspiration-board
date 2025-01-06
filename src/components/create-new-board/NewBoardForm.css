@@ -3,15 +3,15 @@
   flex-direction: column;
   row-gap: 8px;
 
-  label[for='board-title'] {
+  label[for="board-title"] {
     text-align: left;
   }
 
-  label[for='board-owner'] {
+  label[for="board-owner"] {
     text-align: left;
   }
 
-  label[for='board-preview'] {
+  label[for="board-preview"] {
     text-align: left;
   }
 
@@ -19,12 +19,12 @@
     border: 1px solid black;
   }
 
-  label[for='board-title-error'] {
+  label[for="board-title-error"] {
     text-align: left;
     color: red;
   }
 
-  label[for='board-owner-error'] {
+  label[for="board-owner-error"] {
     text-align: left;
     color: red;
   }
@@ -40,5 +40,3 @@
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
   }
 }
-
-;
