@@ -5,3 +5,15 @@
     row-gap: 8px;
     margin-top: 16px;
 }
+.sortcards{
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+}
+.button-like{
+    width: 150px;
+}
+
+.button-reset{
+    width: 100px;
+}
