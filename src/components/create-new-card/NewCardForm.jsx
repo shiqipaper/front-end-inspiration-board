@@ -43,13 +43,13 @@ const NewCardForm = ({ onAddCard }) => {
             <input 
                 type="text" 
                 name="message" 
-                className="input-message" 
+                className={`input-message ${error || formCard.length > 40 || !formCard ? 'input-error' : ''}`}
                 value={formCard}
                 onChange={handleCardChange}
                 />
             <label htmlFor="card-error">{error}</label>
             <label htmlFor="card-preview">{`Preview: ${formCard ? formCard : ''}`}</label>
-            <label htmlFor="card-character-count-preview">{`${formCard ? formCard.length : '0'} / 40`}</label>
+            <label htmlFor="card-character-count-preview">{`Characters remaining: ${formCard ? (40 - formCard.length) : '40'}`}</label>
             <button type='submit'>Submit</button>
         </form>
     );
