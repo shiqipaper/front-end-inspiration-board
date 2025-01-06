@@ -9,7 +9,7 @@ const CardList = ({ cards, onDeleteCard, onRateCard }) => {
 
     useEffect(() => {
         if (isSortByRate) {
-            const sorted = [...cards].sort((a, b) => b.rate - a.rate);
+            const sorted = [...cards].sort((a, b) => b.likes_count - a.likes_count);
             setSortedCards(sorted);
         } else {
             setSortedCards(cards);
