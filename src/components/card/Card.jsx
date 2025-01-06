@@ -2,13 +2,24 @@ import PropTypes from 'prop-types';
 import './Card.css'; 
 
 
-const Card = ({ card_id, message, likes_count, onDeleteCard, onRateCard}) => {
-    
+const Card = (props) => {
+    const { 
+        card_id, 
+        message, 
+        likes_count, 
+        onDeleteCard, 
+        onRateCard
+    } = props;
+
     const deleteCard = () => {
         onDeleteCard(card_id)
     }
     const rateCard = () => {
-        onRateCard(card_id)
+        onRateCard({
+            card_id, 
+            message, 
+            likes_count, 
+        })
     }
 
     return (

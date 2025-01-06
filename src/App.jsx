@@ -6,7 +6,7 @@ import SelectedBoard from './components/selected-board/SelectedBoard';
 import NewCardForm from './components/create-new-card/NewCardForm';
 import { useState, useEffect } from 'react';
 import { getAllBoardsApi, createAllBoardApi, getBoardIdApi } from './api/boardApi';
-import { getAllCardsApi, createCardApi } from './api/cardApi';
+import { getAllCardsApi, createCardApi, updateCardApi } from './api/cardApi';
 
 
 const SELECT_BOARD_FROM_LIST = "Select a Board from the Board List!";
@@ -66,9 +66,13 @@ function App() {
     const updatedCards = cards.filter((card) => card.id != id);
     setCards(updatedCards)
   }
-  const rateCard = (id) => {
-    const updatedCards = cards.map((card) => card.id === id ? {...card, rate: (card.rate || 0) + 1}: card);
-    setCards(updatedCards)
+  const rateCard = (updated_card) => {
+
+    updateCardApi(updated_card.card_id, updated_card)
+    .then(({card}) =>{
+      const updatedCards = cards.map((currentCard) => currentCard.card_id === card.card_id ? card : currentCard);
+      setCards(updatedCards)
+    })
   }
 
   const createNewCard = (newCard) => {

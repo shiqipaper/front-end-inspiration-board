@@ -1,10 +1,10 @@
 import axios from 'axios';
-const kbaseURL = 'https://back-end-inspiration-board-52p9.onrender.com/boards';
+const kbaseURL = 'https://back-end-inspiration-board-52p9.onrender.com';
 
 
 //Get all cards
 export const getAllCardsApi = (id) => {
-    return axios.get(`${kbaseURL}/${id}/cards`)
+    return axios.get(`${kbaseURL}/boards/${id}/cards`)
     .then((response) => {
         const apiCards = response.data;
         const newCards = apiCards.cards;
@@ -19,9 +19,20 @@ export const getAllCardsApi = (id) => {
 //Create card
 export const createCardApi = (board_id, newCard) => {
     // console.log("Board with board_id:",boardWithBoardId);
-    return axios.post(`${kbaseURL}/${board_id}/cards`, newCard)
+    return axios.post(`${kbaseURL}/boards/${board_id}/cards`, newCard)
     .then((response) => {
-        console.log("card: ",response)
+        return response.data;
+    })
+    .catch((error) => {
+        console.log("Error creating board:", error);
+    });
+};
+
+//Update card
+export const updateCardApi = (card_id, updatedCard) => {
+    
+    return axios.put(`${kbaseURL}/cards/${card_id}/like`, updatedCard)
+    .then((response) => {
         return response.data;
     })
     .catch((error) => {
