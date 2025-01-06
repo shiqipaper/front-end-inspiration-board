@@ -6,6 +6,10 @@
     justify-content: space-around;
     padding: 8px;
 }
+.actions{
+    display: flex;
+    column-gap: 4px;
+}
 .rate-button{
     background-color: #FFFF00;
 }
