@@ -43,7 +43,7 @@ const NewCardForm = ({ onAddCard }) => {
             <input 
                 type="text" 
                 name="message" 
-                className={`input-message ${error ? 'input-error' : ''}`}
+                className={`input-message ${error || formCard.length > 40 || !formCard ? 'input-error' : ''}`}
                 value={formCard}
                 onChange={handleCardChange}
                 />

@@ -16,6 +16,10 @@ const NewBoardForm = ({ submitBoard }) => {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+        setError({
+            title: '',
+            owner: ''
+        });
     };
     
     const handleSubmit = (event) => {
@@ -54,11 +58,11 @@ const NewBoardForm = ({ submitBoard }) => {
     return (
         <form onSubmit={handleSubmit} className="board-form">
             <label htmlFor="board-title">Title</label>
-            <input value={formData.title} type="text" name="title" className="input-title" onChange={handleChange}/>
+            <input value={formData.title} type="text" name="title" className={`input-title ${error.title || !formData.title ? 'input-error' : ''}`} onChange={handleChange}/>
             <label htmlFor="board-title-error">{error.title}</label>
 
             <label htmlFor="board-owner">Owner&apos;s Name</label>
-            <input value={formData.owner} type="text" name = "owner" className="input-owner" onChange={handleChange}/>
+            <input value={formData.owner} type="text" name = "owner" className={`input-owner ${error.owner || !formData.owner ? 'input-error' : ''}`} onChange={handleChange}/>
             <label htmlFor="board-owner-error">{error.owner}</label>
 
             <label htmlFor="board-preview">{`Preview: ${formData.title ? formData.title : ''} - ${formData.owner ? formData.owner : ''}`}</label>
