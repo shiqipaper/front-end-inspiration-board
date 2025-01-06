@@ -15,7 +15,7 @@ function App() {
   const [selectedBoardTitle, setSelectedBoardTitle] = useState(null);
   const [isShowNewBoard, setIsShowNewBoard] = useState(true);
   const [selectedBoardID, setSelectedBoardID] = useState(0);
-
+  const [selectedBoardOwner, setSelectedBoardOwner] = useState('');
   const [cards, setCards ] = useState([]);
   const showCards = selectedBoardTitle !== null;
   
@@ -33,7 +33,8 @@ function App() {
         .then((board) => {
           // console.log("Fetched board:", board);
           setSelectedBoardTitle(board.title);
-          setSelectedBoardID(board.id)
+          setSelectedBoardID(board.id);
+          setSelectedBoardOwner(board.owner);
         })
         .catch((error) => {
           console.error("Error fetching board:", error);
@@ -109,7 +110,7 @@ function App() {
             <h2 className="heading-board">Selected Board</h2>
             {/* <SelectedBoard selectedTitle={selectedBoard}  /> */}
             {selectedBoardTitle ? (
-              <SelectedBoard selectedTitle={selectedBoardTitle} selectedBoardID={selectedBoardID}/>
+              <SelectedBoard selectedTitle={selectedBoardTitle} selectedBoardID={selectedBoardID} selectedBoardOwner={selectedBoardOwner}/>
             ) : (
               <p>{SELECT_BOARD_FROM_LIST}</p>
             )}
