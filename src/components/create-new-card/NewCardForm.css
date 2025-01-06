@@ -20,3 +20,14 @@ button {
     border: 1px solid red;
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
+
+label[for='card-error']{
+    text-align: left;
+    color: red;
+}
+
+label[for='card-character-count-preview'] {
+    text-align: right;
+    color: gray;
+    font-size: small;
+}
