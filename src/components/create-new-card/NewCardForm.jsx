@@ -5,14 +5,15 @@ import { useState } from 'react';
 const NewCardForm = ({ onAddCard }) => {
   const [formCard, setFormCard] = useState('');
   const [error, setError] = useState('');
-  const characterLimitError = 'Card message must not exceed 40 characters';
+  const characterLimit = 40;
+  const characterLimitError = `Card message must not exceed ${characterLimit} characters`;
 
   const handleCardChange = (event) => {
     setFormCard(event.target.value);
-    if (event.target.value.length > 40) {
+    if (event.target.value.length > characterLimit) {
       setError(characterLimitError);
     };
-    if (event.target.value.length <= 40 && (event.target.value.trim() !== '')) {
+    if (event.target.value.length <= characterLimit && (event.target.value.trim() !== '')) {
       setError('');
     };
   };
@@ -24,7 +25,7 @@ const NewCardForm = ({ onAddCard }) => {
       setError('Required');
       return;
     }
-    if (formCard.length > 40) {
+    if (formCard.length > characterLimit) {
       setError(characterLimitError);
       return;
     }
@@ -47,13 +48,13 @@ const NewCardForm = ({ onAddCard }) => {
       <input
         type="text"
         name="message"
-        className={`input-message ${error || formCard.length > 40 || !formCard ? 'input-error' : ''}`}
+        className={`input-message ${error || formCard.length > characterLimit || !formCard ? 'input-error' : ''}`}
         value={formCard}
         onChange={handleCardChange}
       />
       <label htmlFor="card-error">{error}</label>
       <label htmlFor="card-preview">{`Preview: ${formCard ? formCard : ''}`}</label>
-      <label htmlFor="card-character-count-preview">{`Characters remaining: ${formCard ? (40 - formCard.length) : '40'}`}</label>
+      <label htmlFor="card-character-count-preview">{`Characters remaining: ${formCard ? (characterLimit - formCard.length) : characterLimit}`}</label>
       <button type='submit'>Submit</button>
     </form>
   );
