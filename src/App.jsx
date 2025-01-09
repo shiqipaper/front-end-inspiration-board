@@ -18,7 +18,6 @@ function App() {
   const [selectedBoardOwner, setSelectedBoardOwner] = useState('');
   const [cards, setCards] = useState([]);
   const showCards = selectedBoardTitle !== null;
-  const [, setOriginalCards] = useState([]);
   const [isSortByLikes, setIsSortByLikes] = useState(false);
 
 
@@ -43,7 +42,6 @@ function App() {
       });
     getAllCardsApi(boardId).then((fetchedCards) => {
       setCards(fetchedCards);
-      setOriginalCards(fetchedCards);
       setIsSortByLikes(false);
     })
       .catch((error) => {
@@ -71,7 +69,6 @@ function App() {
         if (message === 'Card deleted successfully') {
           const updatedCards = cards.filter((currentCard) => currentCard.card_id != card.card_id);
           setCards(updatedCards);
-          setOriginalCards(updatedCards)
         }
       })
   };
@@ -82,7 +79,6 @@ function App() {
       .then(({ card }) => {
         const updatedCards = cards.map((currentCard) => currentCard.card_id === card.card_id ? card : currentCard);
         setCards(updatedCards);
-        setOriginalCards(updatedCards)
       })
   };
 
@@ -95,7 +91,6 @@ function App() {
       .then(({ card }) => {
         const updatedCards = [...cards, card];
         setCards(updatedCards);
-        setOriginalCards(updatedCards);
       })
       .catch((error) => {
         console.error("Error creating card:", error);
